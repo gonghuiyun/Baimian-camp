@@ -10,9 +10,6 @@ L.appendleft(0)
 L2 = deque([3,2,1,5,6,4])
 L2.appendleft(0)
 
-L3 = deque([-1,2,0])
-L3.appendleft(0)
-
 def swap(L,i,j):
     L[i], L[j] = L[j],L[i]
     return L
@@ -28,14 +25,14 @@ def node_adjust(L,node):
     #只有左子节点
     elif node*2+1>len(L)-1:
         if L[node]<L[node*2]:
-            swap(L,node,node*2)
+            L[node], L[node*2] = L[node*2], L[node]
             return L
     else:
         if L[node*2]<L[node*2+1]:
             swap(L,node*2,node*2+1)
         #比较node与左子节点的值
         if L[node]<L[node*2]:
-            swap(L,node,node*2)
+            L[node], L[node*2] = L[node*2], L[node]
     return L
 
 def heap_struct(L):
@@ -60,7 +57,7 @@ def findKthLargest(L, k):
         for i in range(k - 1):
             if len(L) == 2:
                 return L[1]
-            swap(L, 1, len(L) - 1)
+            L[1], L[len(L) - 1] = L[len(L) - 1], L[1]
             L.pop()
             heap_struct(L)
         tmp = L[1]
